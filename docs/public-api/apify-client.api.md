@@ -2441,7 +2441,7 @@ export interface User {
 // @public
 export class UserClient extends ResourceClient {
     constructor(options: ApiClientSubResourceOptions);
-    get(): Promise<User>;
+    get(): Promise<User | undefined>;
     limits(): Promise<AccountAndUsageLimits | undefined>;
     monthlyUsage(): Promise<MonthlyUsage | undefined>;
     updateLimits(options: LimitsUpdateOptions): Promise<void>;

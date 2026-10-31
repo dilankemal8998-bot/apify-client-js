@@ -43,7 +43,7 @@ describe('User methods', () => {
             const userId = 'some-id';
 
             const res = await client.user(userId).get();
-            expect(res.id).toEqual('get-user');
+            expect(res?.id).toEqual('get-user');
             validateRequest({ query: {}, params: { userId } });
 
             const browserRes = await page.evaluate((id) => client.user(id).get(), userId);
@@ -53,12 +53,24 @@ describe('User methods', () => {
 
         test('get() with no userId', async () => {
             const res = await client.user().get();
-            expect(res.id).toEqual('get-user');
+            expect(res?.id).toEqual('get-user');
             validateRequest({ query: {}, params: { userId: ME_USER_NAME_PLACEHOLDER } });
 
             const browserRes = await page.evaluate((id) => client.user(id).get(), undefined);
             expect(browserRes).toEqual(res);
             validateRequest({ query: {}, params: { userId: ME_USER_NAME_PLACEHOLDER } });
+        });
+
+        test('get() returns undefined on 404 status code (RECORD_NOT_FOUND)', async () => {
+            const userId = '404';
+
+            const res = await client.user(userId).get();
+            expect(res).toBeUndefined();
+            validateRequest({ query: {}, params: { userId } });
+
+            const browserRes = await page.evaluate((id) => client.user(id).get(), userId);
+            expect(browserRes).toEqual(res);
+            validateRequest({ query: {}, params: { userId } });
         });
 
         test('monthlyUsage() works', async () => {
