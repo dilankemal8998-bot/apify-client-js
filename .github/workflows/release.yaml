@@ -45,6 +45,11 @@ jobs:
 
     run_code_checks:
         uses: ./.github/workflows/check.yaml
+        # A reusable workflow's jobs can't get more permissions than the calling job grants;
+        # the docs job in check.yaml needs pull-requests: write to comment on PRs.
+        permissions:
+            contents: read
+            pull-requests: write
 
     update_changelog:
         needs: [release_metadata, run_code_checks]
