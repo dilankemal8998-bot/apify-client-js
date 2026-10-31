@@ -40,6 +40,7 @@ module.exports = {
             '@apify/docs-theme',
             /** @type { import('@apify/docs-theme/types').ThemeOptions } */
             {
+                changelogFromRoot: true,
                 changelogDisplayedSidebar: 'sidebar',
                 subNavbar: {
                     title: 'API client for JavaScript',

@@ -103,6 +103,10 @@ jobs:
         name: Docs build
         if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            # Needed to post or update the "broken links" comment on pull requests.
+            pull-requests: write
         steps:
             - name: Checkout Source code
               uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
